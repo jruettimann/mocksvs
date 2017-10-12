@@ -15,7 +15,9 @@ import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.*;
 import java.net.URL;
+import java.util.Date;
 import java.util.Iterator;
+import java.util.Random;
 
 @Data
 public class Employee {
@@ -29,7 +31,6 @@ public class Employee {
     private String email;
     private String phone;
     private String bankNumber;
-    private Boolean online;
 
     public Employee(Integer id) throws IOException {
         this.id = id;
@@ -40,6 +41,10 @@ public class Employee {
         return Resources.getResource("img/employee" + id + ".jpg").openStream();
     }
 
+    public Boolean isOnline() {
+        Random random = new Random();
+        return random.nextBoolean();
+    }
 
     public Boolean isPortraitAvailable() {
         try {

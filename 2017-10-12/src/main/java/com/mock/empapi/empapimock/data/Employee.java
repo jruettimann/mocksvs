@@ -29,6 +29,7 @@ public class Employee {
     private String email;
     private String phone;
     private String bankNumber;
+    private Boolean online;
 
     public Employee(Integer id) throws IOException {
         this.id = id;

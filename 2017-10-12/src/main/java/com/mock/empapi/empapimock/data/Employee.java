@@ -1,36 +1,84 @@
 package com.mock.empapi.empapimock.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.google.common.base.Joiner;
-import com.google.common.collect.Lists;
 import com.google.common.io.Resources;
 import lombok.Data;
 
-import javax.imageio.*;
-import javax.imageio.event.IIOReadWarningListener;
-import javax.imageio.stream.ImageInputStream;
-import javax.imageio.stream.ImageOutputStream;
-import javax.imageio.stream.MemoryCacheImageOutputStream;
-import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
-import java.io.*;
-import java.net.URL;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.Random;
+import java.io.IOException;
+import java.io.InputStream;
 
 @Data
 public class Employee {
 
+    /**
+     * Entspricht in DB: ID
+     */
     private Integer id;
+
+    /**
+     * Entspricht in DB: VORNAME
+     */
     private String firstName;
+
+    /**
+     * Entspricht in DB: NACHNAME
+     */
     private String lastName;
-    private String jobTitle;
-    private String jobRole;
-    private String department;
+
+    /**
+     * Entspricht in DB: EMAIL
+     */
     private String email;
+
+    /**
+     * Entspricht in DB: TELEFON_DIREKT
+     */
     private String phone;
+
+    /**
+     * Entspricht in DB: SITZCODE
+     */
     private String bankNumber;
+
+    /**
+     * Entspricht in DB: STELLE_NAME
+     */
+    private String jobTitle;
+
+    /**
+     * Entspricht in DB: JOBTITELNAME
+     */
+    private String jobRole;
+
+    /**
+     * Entspricht in DB: FUNKTION_BEZEICHNUNG
+     */
+    private String jobFunction;
+
+    /**
+     * Entspricht in DB: FUNKTION_STUFE
+     */
+    private String jobFunctionLevel;
+
+    /**
+     * Entspricht in DB: GRUPPE_NAME
+     */
+    private String group;
+
+    /**
+     * Entspricht in DB: DEPARTEMENT
+     */
+    private String department;
+
+    /**
+     * Entspricht in DB: ARBEITGEBER
+     */
+    private String company;
+
+    /**
+     * Entspricht in DB: EMPLOYEEID
+     */
+    private String empId;
 
     public Employee(Integer id) throws IOException {
         this.id = id;
@@ -41,16 +89,11 @@ public class Employee {
         return Resources.getResource("img/employee" + id + ".jpg").openStream();
     }
 
-    public Boolean isOnline() {
-        Random random = new Random();
-        return random.nextBoolean();
-    }
-
     public Boolean isPortraitAvailable() {
         try {
             return getImageFile() != null;
         } catch (IOException e) {
-            return  false;
+            return false;
         }
     }
 }

@@ -83,6 +83,9 @@ public class Employee {
     @JsonIgnore
     private URL imgFile;
 
+    @JsonIgnore
+    private PresenceState presenceState;
+
     public Employee(Integer id) throws IOException {
         this.id = id;
     }

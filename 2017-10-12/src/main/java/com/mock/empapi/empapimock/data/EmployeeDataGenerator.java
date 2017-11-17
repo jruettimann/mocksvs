@@ -51,7 +51,7 @@ public class EmployeeDataGenerator {
             employee.setCompany(getRandomValue(companies));
             employee.setEmpId(generateEmpId());
             employee.setImgFile(picture);
-            System.out.println("Bild zu Mitarbeiter " + employee.getId() + " hinzugefügt: " + picture);
+            employee.setPresenceState(getRandomValue(PresenceState.values()));
             generatedEmployees.add(employee);
         }
         return generatedEmployees;

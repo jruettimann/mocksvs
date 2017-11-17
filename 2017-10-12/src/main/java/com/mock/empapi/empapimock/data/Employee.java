@@ -1,11 +1,11 @@
 package com.mock.empapi.empapimock.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.google.common.io.Resources;
 import lombok.Data;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 @Data
 public class Employee {
@@ -80,19 +80,22 @@ public class Employee {
      */
     private String empId;
 
+    @JsonIgnore
+    private URL imgFile;
+
     public Employee(Integer id) throws IOException {
         this.id = id;
     }
 
     @JsonIgnore
-    public InputStream getImageFile() throws IOException {
-        return Resources.getResource("img/employee" + id + ".jpg").openStream();
+    public InputStream getImageFile() throws IOException, NullPointerException {
+        return imgFile.openStream();
     }
 
     public Boolean isPortraitAvailable() {
         try {
             return getImageFile() != null;
-        } catch (IOException e) {
+        } catch (Exception e) {
             return false;
         }
     }

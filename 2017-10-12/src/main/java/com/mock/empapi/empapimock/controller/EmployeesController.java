@@ -43,8 +43,11 @@ public class EmployeesController {
     @GetMapping("/employees/{id}/state")
     public ResponseEntity<EmployeeState> getState(@PathVariable("id") Integer id) {
         try {
-            int pick = new Random().nextInt(PresenceState.values().length);
-            PresenceState presence = PresenceState.values()[pick];
+            Employee employee = dao.find(id);
+            if (employee == null) {
+                throw new Exception("Employee mit ID=" + id + " existiert nicht.");
+            }
+            PresenceState presence = employee.getPresenceState();
             return ResponseEntity.ok(new EmployeeState(presence));
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

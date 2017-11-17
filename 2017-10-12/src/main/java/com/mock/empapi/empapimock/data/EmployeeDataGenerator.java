@@ -45,7 +45,9 @@ public class EmployeeDataGenerator {
         BufferedReader br = new BufferedReader(new InputStreamReader(resource.openStream()));
         String fileName;
         while ((fileName = br.readLine()) != null) {
-            urls.add(Resources.getResource(folder + "/" + fileName));
+            URL imgUrl = Resources.getResource(folder + "/" + fileName);
+            System.out.println("Bild gefunden: " + imgUrl);
+            urls.add(imgUrl);
         }
         return urls;
     }
@@ -56,6 +58,7 @@ public class EmployeeDataGenerator {
             Gender gender = getRandomValue(Gender.values());
             String firstName = generateFirstName(gender);
             String lastName = getRandomValue(lastNames);
+            URL picture = getPicture(gender);
 
             Employee employee = new Employee(i + 1);
             employee.setFirstName(firstName);
@@ -71,7 +74,8 @@ public class EmployeeDataGenerator {
             employee.setDepartment(getRandomValue(departements));
             employee.setCompany(getRandomValue(companies));
             employee.setEmpId(generateEmpId());
-            employee.setImgFile(getPicture(gender));
+            employee.setImgFile(picture);
+            System.out.println("Bild zu Mitarbeiter " + employee.getId() + "hinzugefügt: " + picture);
             generatedEmployees.add(employee);
         }
         return generatedEmployees;

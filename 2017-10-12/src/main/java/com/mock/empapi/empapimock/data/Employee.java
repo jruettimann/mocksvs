@@ -89,6 +89,7 @@ public class Employee {
 
     @JsonIgnore
     public InputStream getImageFile() throws IOException, NullPointerException {
+        System.out.println("Bild wird angefordert für Mitarbeiter " + id + ": " + imgFile);
         return imgFile.openStream();
     }
 

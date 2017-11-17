@@ -4,9 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.io.Resources;
 import org.springframework.stereotype.Component;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
 import java.util.Random;
@@ -25,32 +23,10 @@ public class EmployeeDataGenerator {
     private static String[] jobFunctionLevels = {null, "3", "6", "5", "4", "2"};
     private static String[] groups = {"RAI Lab", "Digitale Kommunikation", "Kommunikation & Politik", "Einkauf", "00 Sirnach", "00 Wiler", "00 Lützelflüh", "00 Erlinsbach", "00 Wittenbach", "Fund Solutions", "00 Belfaux"};
     private static String[] departements = {"Services", "IT", "Niederlassungen & Regionen"};
-    private static List<URL> menImages;
-    private static List<URL> womenImages;
-
-    static {
-        try {
-            menImages = listFiles("img/men");
-            womenImages = listFiles("img/women");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    private static List<String> menImages = Lists.newArrayList("img/men/7fcbba165.jpg", "img/men/business.portrait.09-205x320.jpg", "img/men/business-portrait-photographer-bologna.jpg", "img/men/Executive_Headshot_8898.jpg", "img/men/male1.jpg", "img/men/male3.jpg", "img/men/male4.jpg", "img/men/male5.jpg", "img/men/male6.jpg", "img/men/male7.jpg", "img/men/male8.jpg", "img/men/male9.jpg", "img/men/male10.jpg");
+    private static List<String> womenImages = Lists.newArrayList("img/women/4b6ed16ff791f4cf25066578a9296a61.jpg", "img/women/accelerate-stuttgart-Portrait-2.jpg", "img/women/business.portrait.cv_.resume.geneva.20.jpg", "img/women/female1.jpg", "img/women/female2.jpg", "img/women/female3.jpg", "img/women/female4.jpg", "img/women/female5.jpg", "img/women/female7.jpg", "img/women/female8.jpg", "img/women/female9.jpg", "img/women/female10.jpg", "img/women/female11.jpg", "img/women/female12.jpg", "img/women/female13.jpg", "img/women/female14.jpg");
 
     private Random random = new Random(123);
-
-    private static List<URL> listFiles(String folder) throws IOException {
-        List<URL> urls = Lists.newArrayList();
-        URL resource = Resources.getResource(folder);
-        BufferedReader br = new BufferedReader(new InputStreamReader(resource.openStream()));
-        String fileName;
-        while ((fileName = br.readLine()) != null) {
-            URL imgUrl = Resources.getResource(folder + "/" + fileName);
-            System.out.println("Bild gefunden: " + imgUrl);
-            urls.add(imgUrl);
-        }
-        return urls;
-    }
 
     public List<Employee> generateEmployees(int count) throws IOException {
         List<Employee> generatedEmployees = Lists.newArrayList();
@@ -75,7 +51,7 @@ public class EmployeeDataGenerator {
             employee.setCompany(getRandomValue(companies));
             employee.setEmpId(generateEmpId());
             employee.setImgFile(picture);
-            System.out.println("Bild zu Mitarbeiter " + employee.getId() + "hinzugefügt: " + picture);
+            System.out.println("Bild zu Mitarbeiter " + employee.getId() + " hinzugefügt: " + picture);
             generatedEmployees.add(employee);
         }
         return generatedEmployees;
@@ -139,6 +115,14 @@ public class EmployeeDataGenerator {
     }
 
     private URL getPicture(Gender gender) {
+        String pictureName = getPictureName(gender);
+        if (pictureName == null) {
+            return null;
+        }
+        return Resources.getResource(pictureName);
+    }
+
+    private String getPictureName(Gender gender) {
         if (gender == Gender.Man) {
             return getAndRemoveRandomValue(menImages);
         } else if (gender == Gender.Woman) {

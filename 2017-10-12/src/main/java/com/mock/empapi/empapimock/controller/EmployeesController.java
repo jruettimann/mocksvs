@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
@@ -24,8 +25,9 @@ public class EmployeesController {
     private Dao dao;
 
     @GetMapping("/employees")
-    public Collection<Employee> findAll() {
-        return dao.findAll();
+    public Collection<Employee> findAll(@RequestParam(value = "limit", required = false) Integer limit, @RequestParam(value = "offset", required = false) Integer offset) {
+        Collection<Employee> all = dao.findAll();
+        return new PageData<>(offset, limit, all).getPageValues();
     }
 
     @GetMapping("/employees/{id}")

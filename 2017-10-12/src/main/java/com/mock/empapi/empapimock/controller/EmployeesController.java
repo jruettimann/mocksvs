@@ -1,5 +1,6 @@
 package com.mock.empapi.empapimock.controller;
 
+import com.google.common.collect.Collections2;
 import com.mock.empapi.empapimock.data.Dao;
 import com.mock.empapi.empapimock.data.Employee;
 import com.mock.empapi.empapimock.data.EmployeeState;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
-import java.util.Random;
 
 @RestController
 public class EmployeesController {
@@ -25,9 +25,10 @@ public class EmployeesController {
     private Dao dao;
 
     @GetMapping("/employees")
-    public Collection<Employee> findAll(@RequestParam(value = "limit", required = false) Integer limit, @RequestParam(value = "offset", required = false) Integer offset) {
+    public Collection<Employee> findAll(@RequestParam(value = "limit", required = false) Integer limit, @RequestParam(value = "offset", required = false) Integer offset, @RequestParam(value = "q", required = false) String q) {
         Collection<Employee> all = dao.findAll();
-        return new PageData<>(offset, limit, all).getPageValues();
+        Collection<Employee> filtered = Collections2.filter(all, (employee -> (q == null || (employee.getFirstName() + " " + employee.getLastName()).toLowerCase().contains(q))));
+        return new PageData<>(offset, limit, filtered).getPageValues();
     }
 
     @GetMapping("/employees/{id}")

@@ -46,7 +46,7 @@ public class EmployeeDataGenerator {
             employee.setJobRole(getRandomValue(jobRoles));
             employee.setJobFunction(getRandomValue(jobFunctions));
             employee.setJobFunctionLevel(getRandomValue(jobFunctionLevels));
-            employee.setGroup(getRandomValue(groups));
+            employee.setTeam(getRandomValue(groups));
             employee.setDepartment(getRandomValue(departements));
             employee.setCompany(getRandomValue(companies));
             employee.setEmpId(generateEmpId());

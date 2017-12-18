@@ -63,7 +63,7 @@ public class Employee {
     /**
      * Entspricht in DB: GRUPPE_NAME
      */
-    private String group;
+    private String team;
 
     /**
      * Entspricht in DB: DEPARTEMENT

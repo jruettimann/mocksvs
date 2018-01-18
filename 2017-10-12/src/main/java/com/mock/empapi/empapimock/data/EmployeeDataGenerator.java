@@ -52,6 +52,7 @@ public class EmployeeDataGenerator {
             employee.setEmpId(generateEmpId());
             employee.setImgFile(picture);
             employee.setPresenceState(getRandomValue(PresenceState.values()));
+            employee.setProfileUrl("http://intranet.raiffeisen.ch/employees/profile/12345" + i + 1);
             generatedEmployees.add(employee);
         }
         return generatedEmployees;

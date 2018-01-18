@@ -80,6 +80,8 @@ public class Employee {
      */
     private String empId;
 
+    private String profileUrl;
+
     @JsonIgnore
     private URL imgFile;
 
